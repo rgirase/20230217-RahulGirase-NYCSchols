@@ -1,6 +1,7 @@
 package com.rng.nycschools.data.repository
 
 import com.rng.nycschools.data.model.SatScoresResponse
+import com.rng.nycschools.data.model.SchoolResponse
 import com.rng.nycschools.data.remote.ApiInterface
 import com.rng.nycschools.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class NYCSchoolsRepositoryImpl @Inject constructor(private val apiInterface: ApiInterface) :
     NYCSchoolsRepository {
-    override suspend fun getNYCSchoolList(): Flow<Resource<List<Any>>> {
+    override suspend fun getNYCSchoolList(): Flow<Resource<List<SchoolResponse>>> {
         return flow {
             emit(Resource.Loading(true))
             val schoolList = try {
