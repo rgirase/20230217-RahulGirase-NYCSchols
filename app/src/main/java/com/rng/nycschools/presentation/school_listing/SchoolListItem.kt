@@ -20,7 +20,7 @@ fun SchoolListItem(schoolList: SchoolResponse, modifier: Modifier = Modifier) {
         Column(modifier = Modifier.weight(1f)) {
             Row(modifier = modifier.fillMaxWidth()) {
                 Text(
-                    text = schoolList.schoolName,
+                    text = schoolList.schoolName.toString(),
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     color = MaterialTheme.colors.onBackground,
@@ -32,7 +32,7 @@ fun SchoolListItem(schoolList: SchoolResponse, modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.width(4.dp))
 
                 Text(
-                    text = schoolList.schoolCode, fontWeight = FontWeight.Light,
+                    text = schoolList.schoolCode.toString(), fontWeight = FontWeight.Light,
                     color = MaterialTheme.colors.onBackground
                 )
 

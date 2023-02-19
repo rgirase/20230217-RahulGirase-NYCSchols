@@ -1,5 +1,9 @@
 package com.rng.nycschools.data.repository
 
+import androidx.room.Query
+import com.rng.nycschools.data.local.SchoolDatabase
+import com.rng.nycschools.data.local.mapper.toSchoolList
+import com.rng.nycschools.data.local.mapper.toSchoolListingEntity
 import com.rng.nycschools.data.model.SatScoresResponse
 import com.rng.nycschools.data.model.SchoolResponse
 import com.rng.nycschools.data.remote.ApiInterface
@@ -12,11 +16,29 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NYCSchoolsRepositoryImpl @Inject constructor(private val apiInterface: ApiInterface) :
+class NYCSchoolsRepositoryImpl @Inject constructor(
+    private val apiInterface: ApiInterface,
+    private val db: SchoolDatabase
+) :
     NYCSchoolsRepository {
-    override suspend fun getNYCSchoolList(): Flow<Resource<List<SchoolResponse>>> {
+    private val dao = db.dao
+    override suspend fun getNYCSchoolList(
+        fetchFromRemote: Boolean,
+        query: String
+    ): Flow<Resource<List<SchoolResponse>>> {
         return flow {
             emit(Resource.Loading(true))
+            val localSchoolList = dao.searchSchoolFromList(query)
+            emit(Resource.Success(data = localSchoolList.map { it.toSchoolList() }))
+
+            val isDBEmpty = localSchoolList.isEmpty() && query.isBlank()
+            val shouldLoadFromCache = !isDBEmpty && !fetchFromRemote
+
+            if (shouldLoadFromCache) {
+                emit(Resource.Loading(false))
+                return@flow
+            }
+
             val schoolList = try {
                 apiInterface.getNYCSchoolList()
             } catch (e: IOException) {
@@ -28,8 +50,13 @@ class NYCSchoolsRepositoryImpl @Inject constructor(private val apiInterface: Api
                 emit(Resource.Error("HTTP API Error ${e.code()} -> ${e.message()}", null))
                 null
             }
-            schoolList?.let {
-                emit(Resource.Success(it))
+            schoolList?.let { list ->
+                dao.clearSchoolListing()
+                dao.insertSchoolListing(list.map { it.toSchoolListingEntity() })
+                emit(
+                    Resource.Success(
+                        data = dao.searchSchoolFromList("").map { it.toSchoolList() })
+                )
                 emit(Resource.Loading(false))
             }
         }

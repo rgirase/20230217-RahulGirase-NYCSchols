@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.rng.nycschools.presentation.navigation.Screen
+import com.rng.nycschools.presentation.viewmodel.SchoolListingViewModel
 
 @Composable
 fun SchoolListsScreen(
@@ -41,7 +41,7 @@ fun SchoolListsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            navController.navigate(Screen.SchoolScoresScreen.withArgs(schoolItem.schoolCode))
+                            navController.navigate(Screen.SchoolScoresScreen.withArgs(schoolItem.schoolCode.toString()))
                         }
                         .padding(16.dp))
 

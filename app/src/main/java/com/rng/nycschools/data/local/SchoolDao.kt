@@ -1,0 +1,21 @@
+package com.rng.nycschools.data.local
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+
+@Dao
+interface SchoolDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSchoolListing(
+        schoolResponseEntity: List<SchoolResponseEntity>
+    )
+
+    @Query("DELETE FROM schoolResponseEntity")
+    suspend fun clearSchoolListing()
+
+    @Query("""SELECT * FROM schoolResponseEntity WHERE LOWER(city) LIKE '%' || LOWER(:query) || '%' OR LOWER(zip) LIKE '%' || LOWER(:query)""")
+    suspend fun searchSchoolFromList(query: String): List<SchoolResponseEntity>
+
+}

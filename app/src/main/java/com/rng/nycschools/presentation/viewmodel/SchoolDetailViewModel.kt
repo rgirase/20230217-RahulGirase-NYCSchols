@@ -1,4 +1,4 @@
-package com.rng.nycschools.presentation.school_Info
+package com.rng.nycschools.presentation.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rng.nycschools.data.repository.NYCSchoolsRepository
+import com.rng.nycschools.presentation.school_Info.SchoolsDetailsState
 import com.rng.nycschools.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
