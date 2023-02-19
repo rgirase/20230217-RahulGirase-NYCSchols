@@ -53,6 +53,7 @@ class NYCSchoolsRepositoryImpl @Inject constructor(private val apiInterface: Api
             }
             satScoreList?.let { scoreList ->
                 emit(Resource.Success(scoreList.single { item -> item.schoolCode == schoolCode }))
+                emit(Resource.Loading(false))
             }
         }
     }
