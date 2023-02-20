@@ -15,7 +15,7 @@ interface SchoolDao {
     @Query("DELETE FROM schoolResponseEntity")
     suspend fun clearSchoolListing()
 
-    @Query("""SELECT * FROM schoolResponseEntity WHERE LOWER(city) LIKE '%' || LOWER(:query) || '%' OR LOWER(zip) LIKE '%' || LOWER(:query)""")
+    @Query("""SELECT * FROM schoolResponseEntity WHERE LOWER(city) LIKE '%' || LOWER(:query) || '%' OR LOWER(zip) LIKE '%' || LOWER(:query) ORDER BY schoolName ASC""")
     suspend fun searchSchoolFromList(query: String): List<SchoolResponseEntity>
 
     @Query("""SELECT * FROM schoolResponseEntity WHERE LOWER(schoolCode) == LOWER(:schoolCode)""")
