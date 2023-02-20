@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -48,7 +49,7 @@ fun SchoolScoresScreen(
                         .fillMaxWidth()
                         .align(CenterHorizontally)
                 ) {
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = schoolItem?.schoolName.toString(),
                         fontWeight = FontWeight.Bold,
@@ -57,7 +58,6 @@ fun SchoolScoresScreen(
                         maxLines = 2,
                         color = MaterialTheme.colors.onBackground
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
                 }
                 Row(
                     modifier = Modifier
@@ -115,6 +115,7 @@ fun SchoolScoresScreen(
                         .fillMaxWidth()
                         .padding(top = 16.dp)
                 ) {
+                    Spacer(modifier = Modifier.height(8.dp))
                     Text(
                         text = "School SAT Score Requirements",
                         fontWeight = FontWeight.Bold,
@@ -127,13 +128,18 @@ fun SchoolScoresScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp)
+                        .align(CenterHorizontally)
                 ) {
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .padding(top = 8.dp)
                     ) {
-                        Text(text = "Reading ")
+                        Text(
+                            text = "Reading ",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(text = schoolItemSatScore?.readingAvgScore.toString())
                     }
@@ -145,7 +151,11 @@ fun SchoolScoresScreen(
                             .weight(1f)
                             .padding(top = 8.dp)
                     ) {
-                        Text(text = "Math")
+                        Text(
+                            text = "Math",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(text = schoolItemSatScore?.mathAvgScore.toString())
                     }
@@ -158,7 +168,11 @@ fun SchoolScoresScreen(
                             .weight(1f)
                             .padding(top = 8.dp)
                     ) {
-                        Text(text = "Writing")
+                        Text(
+                            text = "Writing",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(text = schoolItemSatScore?.writingAvgScore.toString())
                     }
