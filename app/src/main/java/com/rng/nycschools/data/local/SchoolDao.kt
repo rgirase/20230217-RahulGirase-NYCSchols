@@ -18,4 +18,7 @@ interface SchoolDao {
     @Query("""SELECT * FROM schoolResponseEntity WHERE LOWER(city) LIKE '%' || LOWER(:query) || '%' OR LOWER(zip) LIKE '%' || LOWER(:query)""")
     suspend fun searchSchoolFromList(query: String): List<SchoolResponseEntity>
 
+    @Query("""SELECT * FROM schoolResponseEntity WHERE LOWER(schoolCode) == LOWER(:schoolCode)""")
+    suspend fun searchSchoolBySchoolCode(schoolCode: String): SchoolResponseEntity?
+
 }

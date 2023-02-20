@@ -28,14 +28,6 @@ fun SchoolListItem(schoolList: SchoolResponse, modifier: Modifier = Modifier) {
                     maxLines = 1,
                     modifier = Modifier.weight(1f)
                 )
-
-                Spacer(modifier = Modifier.width(4.dp))
-
-                Text(
-                    text = schoolList.schoolCode.toString(), fontWeight = FontWeight.Light,
-                    color = MaterialTheme.colors.onBackground
-                )
-
             }
 
         }

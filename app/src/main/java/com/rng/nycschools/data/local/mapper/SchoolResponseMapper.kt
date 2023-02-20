@@ -21,3 +21,4 @@ fun SchoolResponse.toSchoolListingEntity(): SchoolResponseEntity {
         schoolCode, schoolName, location, phoneNumber, schoolEmail, schoolWebsite, city, zip
     )
 }
+

@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rng.nycschools.data.model.SatScoresResponse
 import com.rng.nycschools.data.repository.NYCSchoolsRepository
 import com.rng.nycschools.presentation.school_Info.SchoolsDetailsState
 import com.rng.nycschools.utils.Resource
@@ -26,7 +27,6 @@ class SchoolDetailViewModel @Inject constructor(
             val schoolCode = savedStateHandle.get<String>("schoolID") ?: return@launch
             stateSchoolSatScore = stateSchoolSatScore.copy(isLoading = true)
             repository.getSatScores(schoolCode).collect { result ->
-
                 when (result) {
                     is Resource.Error -> {
                         stateSchoolSatScore = stateSchoolSatScore.copy(
@@ -49,6 +49,23 @@ class SchoolDetailViewModel @Inject constructor(
                         stateSchoolSatScore = stateSchoolSatScore.copy(isLoading = result.isLoading)
                     }
                 }
+            }
+
+            repository.getSchoolInfoByCode(schoolCode = schoolCode).collect { result ->
+                when (result) {
+                    is Resource.Error -> {}
+                    is Resource.Loading -> {}
+                    is Resource.Success -> {
+                        result.data?.let { data ->
+                            stateSchoolSatScore =
+                                stateSchoolSatScore.copy(
+                                    schoolItem = data,
+                                    errorMessage = null
+                                )
+                        }
+                    }
+                }
+
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.rng.nycschools.data.repository
 
-import androidx.room.Query
+import com.rng.nycschools.data.local.SchoolResponseEntity
 import com.rng.nycschools.data.model.SatScoresResponse
 import com.rng.nycschools.data.model.SchoolResponse
 import com.rng.nycschools.utils.Resource
@@ -14,5 +14,7 @@ interface NYCSchoolsRepository {
     ): Flow<Resource<List<SchoolResponse>>>
 
     suspend fun getSatScores(schoolCode: String): Flow<Resource<SatScoresResponse>>
+
+    suspend fun getSchoolInfoByCode(schoolCode: String): Flow<Resource<SchoolResponseEntity>>
 
 }

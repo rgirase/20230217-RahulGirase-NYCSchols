@@ -2,6 +2,7 @@ package com.rng.nycschools.data.repository
 
 import androidx.room.Query
 import com.rng.nycschools.data.local.SchoolDatabase
+import com.rng.nycschools.data.local.SchoolResponseEntity
 import com.rng.nycschools.data.local.mapper.toSchoolList
 import com.rng.nycschools.data.local.mapper.toSchoolListingEntity
 import com.rng.nycschools.data.model.SatScoresResponse
@@ -79,9 +80,25 @@ class NYCSchoolsRepositoryImpl @Inject constructor(
                 null
             }
             satScoreList?.let { scoreList ->
-                emit(Resource.Success(scoreList.single { item -> item.schoolCode == schoolCode }))
+                val schoolItem: SatScoresResponse? =
+                    scoreList.singleOrNull { item -> item.schoolCode == schoolCode }
+                if (schoolItem != null) {
+                    emit(Resource.Success(schoolItem))
+                } else {
+                    emit(Resource.Success(SatScoresResponse()))
+                }
                 emit(Resource.Loading(false))
             }
+        }
+    }
+
+    override suspend fun getSchoolInfoByCode(schoolCode: String): Flow<Resource<SchoolResponseEntity>> {
+        return flow {
+            val schoolItem = dao.searchSchoolBySchoolCode(schoolCode)
+            if (schoolItem != null) {
+                emit(Resource.Success(data = schoolItem))
+            }
+
         }
     }
 
