@@ -37,8 +37,7 @@ class SchoolListingViewModel @Inject constructor(private val repository: NYCScho
                 when (result) {
                     is Resource.Error -> {
                         stateSchoolList = stateSchoolList.copy(
-                            isLoading = false,
-                            errorMessage = result.message
+                            isLoading = false, errorMessage = result.message
                         )
                     }
 

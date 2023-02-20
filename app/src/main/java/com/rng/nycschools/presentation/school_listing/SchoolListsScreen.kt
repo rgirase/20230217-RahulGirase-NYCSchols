@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.rng.nycschools.presentation.navigation.Screen
 import com.rng.nycschools.presentation.viewmodel.SchoolListingViewModel
 
@@ -20,6 +22,8 @@ fun SchoolListsScreen(
     viewModel: SchoolListingViewModel = hiltViewModel(),
     navController: NavController
 ) {
+    val swipeRefreshState =
+        rememberSwipeRefreshState(isRefreshing = viewModel.stateSchoolList.isRefreshing)
     val state = viewModel.stateSchoolList
     Scaffold(
         topBar = {
@@ -37,21 +41,32 @@ fun SchoolListsScreen(
                 }, maxLines = 1,
                 singleLine = true
             )
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.schools.size) { i ->
-                    val schoolItem = state.schools[i]
-                    SchoolListItem(schoolList = schoolItem,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                navController.navigate(Screen.SchoolScoresScreen.withArgs(schoolItem.schoolCode.toString()))
-                            }
-                            .padding(16.dp))
 
-                    if (i < state.schools.size) {
-                        Divider(modifier = Modifier.padding(horizontal = 16.dp))
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = { viewModel.onEvent(SchoolListingEvents.Refresh) }) {
+
+
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(state.schools.size) { i ->
+                        val schoolItem = state.schools[i]
+                        SchoolListItem(schoolList = schoolItem,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    navController.navigate(
+                                        Screen.SchoolScoresScreen.withArgs(
+                                            schoolItem.schoolCode.toString()
+                                        )
+                                    )
+                                }
+                                .padding(16.dp))
+
+                        if (i < state.schools.size) {
+                            Divider(modifier = Modifier.padding(horizontal = 16.dp))
+                        }
+
                     }
-
                 }
             }
 

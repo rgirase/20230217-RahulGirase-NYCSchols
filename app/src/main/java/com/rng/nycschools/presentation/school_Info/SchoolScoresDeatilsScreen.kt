@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,7 @@ fun SchoolScoresScreen(
     val state = viewModel.stateSchoolSatScore
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "NYC Schools") })
+            TopAppBar(title = { Text(text = stringResource(R.string.nyc_schools)) })
         }
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
@@ -65,7 +66,7 @@ fun SchoolScoresScreen(
                         .padding(top = 16.dp)
                 ) {
                     Text(
-                        text = "School Details",
+                        text = stringResource(R.string.school_details),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         color = MaterialTheme.colors.onBackground
@@ -76,7 +77,7 @@ fun SchoolScoresScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp)
                 ) {
-                    Text(text = "Email: ")
+                    Text(text = stringResource(R.string.email))
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = schoolItem?.schoolEmail.toString())
                 }
@@ -85,7 +86,7 @@ fun SchoolScoresScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp)
                 ) {
-                    Text(text = "Address: ")
+                    Text(text = stringResource(R.string.address))
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = schoolItem?.location.toString())
                 }
@@ -95,7 +96,7 @@ fun SchoolScoresScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp)
                 ) {
-                    Text(text = "Phone Number: ")
+                    Text(text = stringResource(R.string.phone_number))
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = schoolItem?.phoneNumber.toString())
                 }
@@ -105,7 +106,7 @@ fun SchoolScoresScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp)
                 ) {
-                    Text(text = "Website: ")
+                    Text(text = stringResource(R.string.website))
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(text = schoolItem?.schoolWebsite.toString())
                 }
@@ -117,7 +118,7 @@ fun SchoolScoresScreen(
                 ) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "School SAT Score Requirements",
+                        text = stringResource(R.string.sat_score_requirements),
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         color = MaterialTheme.colors.onBackground
@@ -136,7 +137,7 @@ fun SchoolScoresScreen(
                             .padding(top = 8.dp)
                     ) {
                         Text(
-                            text = "Reading ",
+                            text = stringResource(R.string.reading),
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                         )
@@ -152,7 +153,7 @@ fun SchoolScoresScreen(
                             .padding(top = 8.dp)
                     ) {
                         Text(
-                            text = "Math",
+                            text = stringResource(R.string.math),
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                         )
@@ -169,7 +170,7 @@ fun SchoolScoresScreen(
                             .padding(top = 8.dp)
                     ) {
                         Text(
-                            text = "Writing",
+                            text = stringResource(R.string.writing),
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                         )
@@ -188,7 +189,7 @@ fun SchoolScoresScreen(
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.baseline_error_outline_24),
-                        contentDescription = "Error Logo",
+                        contentDescription = stringResource(R.string.error_logo),
                         alignment = Center
                     )
                     Spacer(modifier = Modifier.height(8.dp))

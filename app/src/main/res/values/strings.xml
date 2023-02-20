@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">NYCSchools</string>
+    <string name="nyc_schools">NYC Schools</string>
+    <string name="school_details">School Details</string>
+    <string name="email">\"Email: \"</string>
+    <string name="address">\"Address: \"</string>
+    <string name="phone_number">\"Phone Number: \"</string>
+    <string name="website">\"Website: \"</string>
+    <string name="sat_score_requirements">School SAT Score Requirements</string>
+    <string name="reading">\"Reading \"</string>
+    <string name="math">Math</string>
+    <string name="writing">Writing</string>
+    <string name="error_logo">Error Logo</string>
 </resources>
