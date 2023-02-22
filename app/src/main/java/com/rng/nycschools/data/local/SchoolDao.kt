@@ -5,6 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
+/**
+ * School Dao Define database actions here
+ */
 @Dao
 interface SchoolDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

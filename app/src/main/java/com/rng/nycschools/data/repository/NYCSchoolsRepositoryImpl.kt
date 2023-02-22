@@ -16,6 +16,9 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ *  Repository to Handle remote and local data
+ */
 @Singleton
 class NYCSchoolsRepositoryImpl @Inject constructor(
     private val apiInterface: ApiInterface,
@@ -29,17 +32,20 @@ class NYCSchoolsRepositoryImpl @Inject constructor(
     ): Flow<Resource<List<SchoolResponse>>> {
         return flow {
             emit(Resource.Loading(true))
+            // fetch local data if available
             val localSchoolList = dao.searchSchoolFromList(query)
             emit(Resource.Success(data = localSchoolList.map { it.toSchoolList() }))
 
             val isDBEmpty = localSchoolList.isEmpty() && query.isBlank()
             val shouldLoadFromCache = !isDBEmpty && !fetchFromRemote
 
+            // if local database has the list then return
             if (shouldLoadFromCache) {
                 emit(Resource.Loading(false))
                 return@flow
             }
 
+            // fetch school list from remote api
             val schoolList = try {
                 apiInterface.getNYCSchoolList()
             } catch (e: IOException) {
@@ -52,8 +58,11 @@ class NYCSchoolsRepositoryImpl @Inject constructor(
                 null
             }
             schoolList?.let { list ->
+                // clear previous local list
                 dao.clearSchoolListing()
+                // Save newly fetched list to db
                 dao.insertSchoolListing(list.map { it.toSchoolListingEntity() })
+                // Return the latest school list
                 emit(
                     Resource.Success(
                         data = dao.searchSchoolFromList("").map { it.toSchoolList() })
@@ -66,6 +75,7 @@ class NYCSchoolsRepositoryImpl @Inject constructor(
     override suspend fun getSatScores(schoolCode: String): Flow<Resource<SatScoresResponse>> {
         return flow {
             emit(Resource.Loading(true))
+            // fetch sat score from remote api
             val satScoreList = try {
                 apiInterface.getScores()
             } catch (e: IOException) {
@@ -80,6 +90,7 @@ class NYCSchoolsRepositoryImpl @Inject constructor(
                 null
             }
             satScoreList?.let { scoreList ->
+                //filter the School item according to School Code
                 val schoolItem: SatScoresResponse? =
                     scoreList.singleOrNull { item -> item.schoolCode == schoolCode }
                 if (schoolItem != null) {
@@ -94,6 +105,7 @@ class NYCSchoolsRepositoryImpl @Inject constructor(
 
     override suspend fun getSchoolInfoByCode(schoolCode: String): Flow<Resource<SchoolResponseEntity>> {
         return flow {
+            //fetch school item from local database matching requested SchoolCode
             val schoolItem = dao.searchSchoolBySchoolCode(schoolCode)
             if (schoolItem != null) {
                 emit(Resource.Success(data = schoolItem))

@@ -26,6 +26,7 @@ class SchoolDetailViewModel @Inject constructor(
         viewModelScope.launch {
             val schoolCode = savedStateHandle.get<String>("schoolID") ?: return@launch
             stateSchoolSatScore = stateSchoolSatScore.copy(isLoading = true)
+            // fetch sat score from remote api and filter
             repository.getSatScores(schoolCode).collect { result ->
                 when (result) {
                     is Resource.Error -> {
@@ -51,6 +52,7 @@ class SchoolDetailViewModel @Inject constructor(
                 }
             }
 
+            //fetch school item from local database matching requested SchoolCode
             repository.getSchoolInfoByCode(schoolCode = schoolCode).collect { result ->
                 when (result) {
                     is Resource.Error -> {}

@@ -17,8 +17,11 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.rng.nycschools.presentation.navigation.Screen
 import com.rng.nycschools.presentation.viewmodel.SchoolListingViewModel
 
+/**
+ * School List Home Screen
+ */
 @Composable
-fun SchoolListsScreen(
+fun SchoolListHomeScreen(
     viewModel: SchoolListingViewModel = hiltViewModel(),
     navController: NavController
 ) {
@@ -27,6 +30,7 @@ fun SchoolListsScreen(
     val state = viewModel.stateSchoolList
     Scaffold(
         topBar = {
+            // Tool Bar
             TopAppBar(title = { Text(text = "NYC Schools") })
         }
     ) { padding ->
@@ -42,11 +46,12 @@ fun SchoolListsScreen(
                 singleLine = true
             )
 
+            // Swipe to refresh to refresh the list on swipe
             SwipeRefresh(
                 state = swipeRefreshState,
                 onRefresh = { viewModel.onEvent(SchoolListingEvents.Refresh) }) {
 
-
+                //Loading the School List
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
                     items(state.schools.size) { i ->
                         val schoolItem = state.schools[i]

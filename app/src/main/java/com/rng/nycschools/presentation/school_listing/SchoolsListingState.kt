@@ -2,7 +2,9 @@ package com.rng.nycschools.presentation.school_listing
 
 import com.rng.nycschools.data.model.SchoolResponse
 
-
+/**
+ *  School List Data state
+ */
 data class SchoolsListingState(
     val schools: List<SchoolResponse> = emptyList(),
     val isLoading: Boolean = false,

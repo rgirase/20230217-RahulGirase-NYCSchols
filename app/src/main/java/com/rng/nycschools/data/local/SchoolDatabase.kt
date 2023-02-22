@@ -3,6 +3,9 @@ package com.rng.nycschools.data.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 
+/**
+ * School Database
+ */
 @Database(
     entities = [SchoolResponseEntity::class],
     version = 2

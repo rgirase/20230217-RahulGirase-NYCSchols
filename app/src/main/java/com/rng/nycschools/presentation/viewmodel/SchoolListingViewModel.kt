@@ -56,6 +56,7 @@ class SchoolListingViewModel @Inject constructor(private val repository: NYCScho
 
     }
 
+    // Handle the User Events
     fun onEvent(event: SchoolListingEvents) {
         when (event) {
             is SchoolListingEvents.OnSearchQueryChange -> {

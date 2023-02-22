@@ -13,10 +13,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
 
+/**
+ * Dependency Provider for Application Components
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    /**
+     * Provides Retrofit Instance
+     */
     @Provides
     @Singleton
     fun provideApiInterface(): ApiInterface {
@@ -24,6 +30,9 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create()).build().create()
     }
 
+    /**
+     * Provides Room Database Instance
+     */
     @Provides
     @Singleton
     fun providesSchoolDatabase(app: Application): SchoolDatabase {

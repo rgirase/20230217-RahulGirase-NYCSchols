@@ -1,6 +1,9 @@
 package com.rng.nycschools.presentation.navigation
 
-//Navigation Screen List
+/**
+ * Navigation Screen List
+ */
+
 sealed class Screen(val route: String) {
     object SchoolListScreen : Screen("school_listing_screen")
     object SchoolScoresScreen : Screen("school_score_screen")
