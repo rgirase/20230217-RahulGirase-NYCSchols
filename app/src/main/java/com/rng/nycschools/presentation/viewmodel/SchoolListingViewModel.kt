@@ -66,7 +66,10 @@ class SchoolListingViewModel @Inject constructor(private val repository: NYCScho
                     getSchoolListing()
                 }
             }
-            SchoolListingEvents.Refresh -> getSchoolListing(fetchRemote = true)
+            SchoolListingEvents.Refresh -> {
+                stateSchoolList = stateSchoolList.copy(searchQuery = "")
+                getSchoolListing(fetchRemote = true)
+            }
         }
     }
 
